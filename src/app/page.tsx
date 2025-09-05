@@ -53,6 +53,14 @@ export default function Home() {
                 <span>Join the conversation</span>
               </div>
 
+              <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
+                  <strong>Registered Users Only</strong>
+                  <br />
+                  This guestbook is exclusively for registered members.
+                </p>
+              </div>
+
               <SignInButton mode="modal" fallbackRedirectUrl="/member">
                 <Button className="w-full" size="lg">
                   <LogIn className="w-4 h-4 mr-2" />

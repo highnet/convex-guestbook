@@ -1,90 +1,90 @@
-# Welcome to your Convex functions directory!
+# Convex Guestbook
 
-Write your Convex functions here.
-See https://docs.convex.dev/functions for more.
+A full-stack, real-time guestbook application built with Next.js, Convex, Clerk, Tailwind CSS, PostHog, and deployed on Vercel.
 
-A query function that takes two arguments looks like:
+## Stack Overview
 
-```ts
-// convex/myFunctions.ts
-import { query } from "./_generated/server";
-import { v } from "convex/values";
+- **Next.js**: React framework for the frontend (App Router)
+- **Convex**: Backend-as-a-service for real-time database and serverless functions
+- **Clerk**: User authentication and session management
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **PostHog**: Product analytics and event tracking
+- **Vercel**: Hosting and deployment platform
 
-export const myQueryFunction = query({
-  // Validators for arguments.
-  args: {
-    first: v.number(),
-    second: v.string(),
-  },
+## Features
 
-  // Function implementation.
-  handler: async (ctx, args) => {
-    // Read the database as many times as you need here.
-    // See https://docs.convex.dev/database/reading-data.
-    const documents = await ctx.db.query("tablename").collect();
+- Sign in/sign up with Clerk
+- Post messages and view them in real time
+- Responsive, modern UI with Tailwind CSS
+- Analytics for user actions (sign in, message sent) via PostHog
 
-    // Arguments passed from the client are properties of the args object.
-    console.log(args.first, args.second);
+## Prerequisites
 
-    // Write arbitrary JavaScript here: filter, aggregate, build derived data,
-    // remove non-public properties, or create new objects.
-    return documents;
-  },
-});
+- Node.js v18 or later
+- Accounts for Convex, Clerk, PostHog, and Vercel
+
+## Getting Started
+
+### 1. Install dependencies
+
+```sh
+npm install
+# or
+yarn install
 ```
 
-Using this query function in a React component looks like:
+### 2. Set up environment variables
 
-```ts
-const data = useQuery(api.myFunctions.myQueryFunction, {
-  first: 10,
-  second: "hello",
-});
+Copy `.env.example` to `.env.local` and fill in:
+
+- Convex deployment URL
+- Clerk API keys
+- PostHog API key and host
+
+### 3. Start Convex backend
+
+```sh
+npx convex dev
 ```
 
-A mutation function looks like:
+### 4. Start Next.js frontend
 
-```ts
-// convex/myFunctions.ts
-import { mutation } from "./_generated/server";
-import { v } from "convex/values";
-
-export const myMutationFunction = mutation({
-  // Validators for arguments.
-  args: {
-    first: v.string(),
-    second: v.string(),
-  },
-
-  // Function implementation.
-  handler: async (ctx, args) => {
-    // Insert or modify documents in the database here.
-    // Mutations can also read from the database like queries.
-    // See https://docs.convex.dev/database/writing-data.
-    const message = { body: args.first, author: args.second };
-    const id = await ctx.db.insert("messages", message);
-
-    // Optionally, return a value from your mutation.
-    return await ctx.db.get(id);
-  },
-});
+```sh
+npm run dev
+# or
+yarn dev
 ```
 
-Using this mutation function in a React component looks like:
+Visit [http://localhost:3000](http://localhost:3000)
 
-```ts
-const mutation = useMutation(api.myFunctions.myMutationFunction);
-function handleButtonPress() {
-  // fire and forget, the most common way to use mutations
-  mutation({ first: "Hello!", second: "me" });
-  // OR
-  // use the result once the mutation has completed
-  mutation({ first: "Hello!", second: "me" }).then((result) =>
-    console.log(result),
-  );
-}
+## Usage
+
+- Sign in with Clerk
+- Post messages and see them update instantly
+- View analytics in your PostHog dashboard
+
+## Analytics with PostHog
+
+- **Activity**: Live feed of all events (e.g., `message_sent`)
+- **Data Management**: Catalog of all event types
+- **Insights**: Visualize event trends
+- **People**: See individual user activity
+
+## Deployment
+
+1. Push your code to GitHub
+2. Deploy Convex backend for production:
+   ```sh
+   npx convex deploy
+   ```
+3. Create a Vercel project and import your repo
+4. Add all environment variables in Vercel settings
+5. Deploy and get your live URL
+
+## Folder Structure
+
 ```
 
-Use the Convex CLI to push your functions to a deployment. See everything
-the Convex CLI can do by running `npx convex -h` in your project root
-directory. To learn more, launch the docs with `npx convex docs`.
+## License
+MIT
+```
