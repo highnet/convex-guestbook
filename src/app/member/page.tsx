@@ -106,11 +106,8 @@ export default function MemberPage() {
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <User className="w-5 h-5" />
-                    Welcome, {user.firstName}!
+                    {user.firstName}!
                   </CardTitle>
-                  <p className="text-muted-foreground text-sm mt-1">
-                    Share your thoughts with the community
-                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
