@@ -1,4 +1,8 @@
 import { FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
+import { Send } from 'lucide-react';
 
 interface MessageFormProps {
   newMessageText: string;
@@ -12,20 +16,27 @@ export default function MessageForm({
   onSubmit,
 }: MessageFormProps) {
   return (
-    <form onSubmit={onSubmit} className="flex gap-4 mb-8">
-      <input
-        value={newMessageText}
-        onChange={(event) => setNewMessageText(event.target.value)}
-        className="flex-grow p-3 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Write your message..."
-      />
-      <button
-        type="submit"
-        disabled={!newMessageText}
-        className="px-6 py-3 bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-gray-600 transition-colors"
-      >
-        Send
-      </button>
-    </form>
+    <Card className="mb-8">
+      <CardContent className="p-6">
+        <form onSubmit={onSubmit} className="flex gap-4">
+          <Textarea
+            value={newMessageText}
+            onChange={(event) => setNewMessageText(event.target.value)}
+            className="flex-grow resize-none"
+            placeholder="Write your message..."
+            rows={3}
+          />
+          <Button
+            type="submit"
+            disabled={!newMessageText.trim()}
+            size="lg"
+            className="px-6"
+          >
+            <Send className="w-4 h-4 mr-2" />
+            Send
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
