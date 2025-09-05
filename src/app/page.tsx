@@ -28,7 +28,7 @@ export default function Home() {
 
     try {
       await sendMessage({ body: newMessageText });
-      console.log('Message sent successfully');
+      console.log('Message sent successfully!');
 
       // Track the message_sent event
       posthog.capture('message_sent', {
