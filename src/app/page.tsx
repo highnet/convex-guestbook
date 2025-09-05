@@ -5,6 +5,7 @@ import { useQuery, useMutation } from 'convex/react';
 import { FormEvent, useState } from 'react';
 import { SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
 import { api } from '../../convex/_generated/api';
+import posthog from 'posthog-js';
 
 export default function Home() {
   // Convex hooks for data fetching and mutation
@@ -28,6 +29,14 @@ export default function Home() {
     try {
       await sendMessage({ body: newMessageText });
       console.log('Message sent successfully');
+
+      // Track the message_sent event
+      posthog.capture('message_sent', {
+        message_length: newMessageText.length,
+        user_id: user?.id,
+        timestamp: new Date().toISOString(),
+      });
+
       setNewMessageText('');
     } catch (error) {
       console.error('Error sending message:', error);
